@@ -17,7 +17,7 @@ zobrazi obsah suboru
 vytvori novy subor, ctrl+C ukoncime zadavanie do suboru
  cat subor1 subor2 > subor3
 zluci subor 1 a 2 do noveho suboru3
- mv subor ìlokaciaî
+ mv subor ‚Äúlokacia‚Äù
 presunie subor do novej lokacie
  mv subor novemeno
 premeuje subor
@@ -34,6 +34,15 @@ ip a
 windows - ssh username@ip_address
 
 change username
+usermod -l <newname> -d /home/<newname> -m <oldname>
+hostname
+sudo nano /etc/hostname
+sudo nano /etc/hostname
+sudo reboot
+sudo passwd username
+passwd
+sudo chown uzivatel:skupina /home/nazov uzivatela
+
 sudo adduser tempuser
 sudo usermod -aG sudo tempuser
 login as tempuser
@@ -48,7 +57,7 @@ hostnamectl set-hostname newhostname
 sudo reboot
 
 zobrazenie skupin
-cd /etc		zlazka so skupinami
+cd /etc		zlozka so skupinami
 cat group		vypisanie skupin
 getent group	alternativny prikaz
 
@@ -57,8 +66,6 @@ sudo groupadd newgroup
 
 pridanie usera do skupiny 
 usermod -a -G groupname username
-
-
 
 nastavenie statickej ip
 cd /etc/netplan
@@ -77,7 +84,7 @@ network:
 sudo netplan apply
 
 zmena majitela
-chown ñ change owner
+chown ‚Äì change owner
 sudo chown moznost majitel:skupina subor
 sudo chown <username> <File name>
 priklad:
@@ -89,29 +96,29 @@ Sudo ufw disable	- disable firewall
 sudo apt install apache2 -y
 service apache2 status
 
-sudo ufw status		- m· byù inactive (sudo ufw disable)
-cd /var/www/html 	- zloûka obsahuj˙ca html
+sudo ufw status		- m√° by≈• inactive (sudo ufw disable)
+cd /var/www/html 	- zlo≈æka obsahuj√∫ca html
 
 Database
 sudo apt install mariadb-server
 sudo mysql_secure_installation
-otazky: zmenit heslo? n, odstranit vzdialen˝ch uzivatelov?y,   nepovoliù prihlasovanievzdialene?n, 
+otazky: zmenit heslo? n, odstranit vzdialen√Ωch uzivatelov?y,   nepovoli≈• prihlasovanievzdialene?n, 
 vymazat testovaciu databazu?y,  ...y
 
 sudo apt install phpmyadmin php-mbstring php-zip php-gd php-json php-curl
 
-ZneprÌstupnenie tabuliek
+Znepr√≠stupnenie tabuliek
 cd /etc/phpmyadmin
 nano config.inc.php
-	--dalöÌm prÌkazom zaistÌme to, ûe uûivatelia nebud˙ vidieù dane tabuæky
+	--dal≈°√≠m pr√≠kazom zaist√≠me to, ≈æe u≈æivatelia nebud√∫ vidie≈• dane tabuƒæky
 $cfg['Servers'][$i]['hide_db'] = 'information_schema|mysql|phpmyadmin|performance_schema';
 
 Zmena post_upload_filesize
 cd /etc/php/7.4/apache2/
 sudo nano php.ini
-Ctrl + W vyhæad·me poloûku "post_upload_filesize" a prepÌöeme
+Ctrl + W vyhƒæad√°me polo≈æku "post_upload_filesize" a prep√≠≈°eme
 
-PrÌkazy na ovl·danie datab·zy
+Pr√≠kazy na ovl√°danie datab√°zy
 use mysql;
  Zvolenie databazy
 Show tables;
@@ -156,10 +163,6 @@ sudo mv /var/www/html/drupal-7.89/ /var/www/html/drupal //premenovanie suboru dr
 
 sudo chown -R www-data:www-data /var/www/html/drupal //pridelenie prav suboru Drupal pre spravcu web servera
 
-sudo chmod -R 775 /var/www/html/Drupal //zmenenie pr·v 
+sudo chmod -R 775 /var/www/html/Drupal //zmenenie pr√°v 
 
 < ip address >/drupal //overenie funkcnosti DrupalCore
-
-
-
-
