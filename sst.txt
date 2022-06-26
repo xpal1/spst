@@ -1,0 +1,127 @@
+-----------VLAN-----------
+SW(config)# vlan <cislo_vlan>
+SW(config-vlan)# name <meno_vlan>
+SW(config)#int fa0/10
+SW(config-if)#switchport mode access (koncZariad)
+SW(config-if)#switchport access vlan <cislo_vlan>
+SW(config-if)#switchport mode{trunk|dynamic desirable|dynamic|auto} (SW-SW, SW-router)
+SW(config-if)#switchport trunk encapsulation dot1q <cislo_vlan>
+SW(config-if)#switchport trunk native vlan <číslo>
+
+----------R-O-S----------
+R#interface GigabitEthernet0/0.10
+R#encapsulation dot1q 10
+R#ip address 10.10.10.10 255.255.255.0
+
+R#interface GigabitEthernet0/0.20
+R#encapsulation dot1q 20 native
+R#ip address 20.20.20.20 255.255.255.0
+
+R(config)# interface G0/0/1.99
+R(config-subif)# encapsulation dot1Q 99
+R(config-subif)# ip add 192.168.99.1 255.255.255.0
+R(config-subif)# exit
+-------------------------
+
+-----------VTP-----------
+SW#vtp mode [server/client]
+SW#vtp domain [domena]
+SW#vtp password [heslo]
+SW#show vtp status
+-------------------------
+
+----------DHCPV4---------
+R#ip dhcp excluded-address [adresa prva-posledna-dns]
+R#ip dhcp pool [nazov]
+R#network [siet 0.0/maska]
+R#default-router [adresa_routera]
+R#dns-server [adresa]
+R#ip helper-address [adresa]
+
+R#service dhcp vlan1
+-------------------------
+
+----------DHCPV6---------
+--SLAAC (pridelenie IPv6 bez DHCP)
+(config-if)# no ipv6 nd managed-config-flag 
+(config-if)# no ipv6 nd other-config-flag 
+# ipv6 unicast-routing
+--Bezstavové DHCP
+# ipv6 unicast-routing
+(config)# ipv6 dhcp pool [nazovPool]
+(dhcp-config)# dns-server [ipv6Adresa]
+(dhcp-config)# domain-name [domenoveMeno]
+(config)# int [rozhranie]
+(config-if)# ipv6 dhcp server [nazovPool]
+(config-if)# ipv6 nd other-config-flag
+--Stavové DHCP
+# ipv6 unicast-routing
+(config)# ipv6 dhcp pool [nazovPool]
+(dhcp-config)# address prefix [ipv6Siet/prefix] lifetime infinite
+(dhcp-config)# dns-server [ipv6Adresa]
+(dhcp-config)# domain-name [domenoveMeno]
+(config)# int [rozhranie]
+(config-if)# ipv6 dhcp server [nazovPool]
+(config-if)# ipv6 nd managed-config-flag
+-------------------------
+
+-------SPANNING TREE------
+SW#spanning-tree vlan 10 priority 4096
+SW#spanning-tree vlan 10 root primary
+SW#spanning-tree vlan 10 port-priority 112
+SW#spanning-tree vlan 10 cost 10
+SW#spanning-tree portfast
+SW#spanning-tree bpdguard enable
+SW#spanning-tree guard root
+SW#spanning-tree mode [?]
+SW#spanning-tree[vlan id][interface --][detail]
+--------------------------
+
+-------ETHERCHANNEL-------
+SW#int range fa0/1-2
+SW#channel-group 1 mode 
+PAGP-->[desirable|auto]-(CISCO)
+LACP-->[active|passive]-(OPEN)
+SW#int port-channel 1
+SW#switchport mode trunk 
+SW#switchport trunk allowed vlan 10,20,99
+--------------------------
+
+-----------HSRP-----------
+#int [port]
+#standby 1 ip [ipadresa]
+#standby 1 preempt (aktívny smerovač)
+#standby 1 priority 101
+#show standby [brief]
+Priorita default 100 --> vyššia vyhráva
+--------------------------
+
+------PORT SECURITY------
+SW(config)#int fa0/10
+SW1(config-if)#switchport port-security 
+SW1(config-if)#switchport port-security maximum 1
+SW1(config-if)#switchport port-security mac-address sticky/00D0.9779.C3A0 
+SW1(config-if)#switchport port-security violation restrict/shutdown/protect 
+--------------------------
+
+-----------ROUTE----------
+--Plavajúca statická cesta
+#ip route [sietAdr] [maskSiete] [AdrSused] [ad]
+#ip route [sietAdr] [maskSiete] [AdrSused] [vystupRozhranie] [ad]
+--Default
+#ip route 0.0.0.0 0.0.0.0 [vystupRozhranie/adresaSuseda]
+--Next hop
+#ip route [sietAdr] [maskSiete] [AdrSused]
+--Výstupné rozhranie
+#ip route [lanSuseda] [sietMaska] [vaseRozhranie]
+--------------------------
+
+-----------VLSM-----------
+255.255.255.0    /24  254
+255.255.255.128  /25  126
+255.255.255.192  /26  62
+255.255.255.224  /27  30
+255.255.255.240  /28  14 
+255.255.255.248  /29  6
+255.255.255.252  /30  2
+--------------------------
